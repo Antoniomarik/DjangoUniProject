@@ -1,0 +1,13 @@
+{% extends 'baseprofessorpage.html' %}
+{% block content %}
+
+    <hr>
+    {% for x in dict %}
+    <p>
+        Ime predmeta: {{x.ImePredmeta}}, Redovni: {{x.UkupnoRed}}, Vanredni: {{x.UkupnoVanred}}, Sveskupa: {{x.SveSkupa}} <br> <a class= "nostyle" href="{% url 'obranadetalji' x.id %}">vidi detalje</a>
+    </p>
+    {% endfor %}
+    <hr>
+   
+
+{%endblock%}

@@ -1,0 +1,13 @@
+
+{% extends 'baseadminpage.html' %}
+
+{% block content %}
+<div class="center">
+<form method="post">
+    {{form.as_p}}   
+    {% csrf_token %}
+        <input type="submit" value="update" name="update" > 
+        <input type="submit" value="delete" name="delete" >
+</form>
+</div>
+{% endblock %}

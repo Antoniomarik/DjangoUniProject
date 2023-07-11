@@ -1,0 +1,42 @@
+{% extends 'baseadminpage.html' %}
+
+    {% block content %}
+    {%if user.is_authenticated and user.role == "stu" or user.role == "admn"%}
+    <div class="center">
+        <form method="post">
+        {% csrf_token %}
+            <table class="center">
+                <tr>
+                <th>Liste Predemeta za studenta {{student.username}}</th>
+                </tr>
+                {% for s in subject %}
+                    <tr>
+                    <td>{{ s.name }}</td>
+                    <td><input type="submit" value="+" name="{{s.name}}" > </td> 
+                    </tr>      
+                {% endfor %}
+            
+            </table>
+            <table >
+            {%for key,value in sem.items%}
+            <h3> {{value}} </h3>
+                {%for u in upisnilist%}
+                    {%if u.korisnik.username == student.username and u.status == "polozen" and u.predmet.sem_izv == key  %}
+                        <p>{{u.status}}: {{u.predmet.name}}</p>
+                    {% elif u.korisnik.username == student.username and u.status == "upisan" and u.predmet.sem_izv == key %}
+                        <p>{{u.status}}: {{u.predmet.name}}</p>
+                        <input type="submit" value="x" name="{{u.predmet.name}}" >
+                            {% if user.role == "admn"%}
+                                <input type="submit" value="pol" name="{{u.predmet.name}}" >
+                            {%endif%}
+                        
+                    {%endif%}
+                {%endfor%}
+            {%endfor%}
+        </table>
+        </form>
+    </div>
+    {%else%}
+<p>Premission Denied. Click <a href="{%url "home"%}">here</a> to go back</p>
+{%endif%}
+    {% endblock %}

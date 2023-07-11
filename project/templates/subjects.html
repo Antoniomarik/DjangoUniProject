@@ -1,0 +1,29 @@
+{% extends 'baseadminpage.html' %}
+{% block content %}
+{%if user.is_authenticated and user.role == "prof" or user.role == "admn"%}
+<div class="center">
+    <form method="post">
+    {% csrf_token %}
+        <table>
+            <tr>
+            <th>Popis Predmeta</th>
+            <td></td>
+            
+            </tr>
+            {% for s in subjects %}
+            <tr>
+            <td>{{ s.name }}</td>
+            <td><a href="{% url 'subjectDetails' s.pk %}"> Detaljno </a></td> 
+            <td><a href="{% url 'edit_subject' s.pk %}"> Edit </a> </td>
+           
+            
+            </tr>
+            {% endfor %}
+            <td ><a href="{% url 'add_subject'%}">Dodaj predmet</a></td>
+        </table>
+    </form>
+</div>
+{%else%}
+<p>Premission Denied. Click <a href="{%url "home"%}">here</a> to go back</p>
+{%endif%}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'baseadminpage.html' %}
+{% block content %}
+{%if user.is_authenticated and user.role == "admn"%}
+<div class="center">
+    <form method="post">
+    {% csrf_token %}
+        <table >
+            <tr>
+            <th>Popis profesora</th>
+            <td></td>
+            
+            </tr>
+            {% for profesor in profesori %}
+            <tr>
+            <td>{{ profesor.username }}</td>
+            <td><a href="{% url 'edit_profesor' profesor.pk %}"> Edit </a> </td>
+           
+            
+            </tr>
+            {% endfor %}
+            <td ><a href="{% url 'add_professor'%}">Dodaj Profesora</a></td>
+        </table>
+    </form>
+</div>
+{%else%}
+<p>Premission Denied. Click <a href="{%url "home"%}">here</a> to go back</p>
+{%endif%}
+{% endblock %}

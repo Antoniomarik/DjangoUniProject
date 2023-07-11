@@ -1,0 +1,15 @@
+{% extends 'baseadminpage.html' %}
+
+{% block title %}Admin Page{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+
+  Hi {{ user.username }}, you are admin!
+  
+{% else %}
+  <p>You are not logged in</p>
+  
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}

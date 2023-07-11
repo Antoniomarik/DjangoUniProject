@@ -1,0 +1,17 @@
+
+{% extends 'baseadminpage.html' %}
+
+{% block content %}
+{%if user.is_authenticated and user.role == "admn"%}
+<div class="center">
+  <h2>Dodaj</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Dodaj</button>
+  </form>
+</div>
+  {%else%}
+    <p>Premission Denied. Click <a href="{%url "home"%}">here</a> to go back</p>
+{%endif%}
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'baseprofessorpage.html' %}
+{% block content %}
+{%if user.is_authenticated and user.role == "prof" or user.role == "admn" %}
+<hr>
+<div class="center">
+    <h1>Subject Details</h1>
+    <table >
+        <tr>
+        <th>Ime predmeta:</th>
+        <td> {{subject.name}}</td>
+        </tr>
+        <tr>
+            <th>Ects:</th>
+            <td>{{subject.ects}}</td>
+        </tr>
+    </table>
+<hr>
+
+    <table>
+        <th>Studenti: Polozeno</th>
+        {% for u in upisi%}
+            {% if u.predmet.name == subject.name and u.status == "polozen" %}
+            <tr><td>Student: {{u.korisnik.username}}</td></tr>
+            {%endif%}
+        {%endfor%}
+    </table>
+
+    <table>
+        <th>Studenti: Izgubljen Potpis</th>
+        {% for u in upisi%}
+            {% if u.predmet.name == subject.name and u.status == "izgubljenPotpis" %}
+            <tr>
+                <td>Student: {{u.korisnik.username}}</td>
+            </tr>
+            {%endif%}
+        {%endfor%}
+    </table>
+
+    <form method="post">
+        {% csrf_token %}
+    <table>
+        <th>Studenti: Upisani</th>
+        {% for u in upisi%}
+            {% if u.predmet.name == subject.name and u.status == "upisan" %}
+            <tr>
+                <td>Student: {{u.korisnik.username}}</td>
+                <td><input type="submit" value="pol" name="{{u.korisnik.username}}" ></td>
+                <td><input type="submit" id="{{u.korisnik.username}}" value="xx" name="{{u.korisnik.username}}" ></td>
+            </tr>
+            
+            {%endif%}
+        {%endfor%}
+    </table>
+    </form>
+</div>
+{%else%}
+    <p>Premission Denied. Click <a href="{%url "home"%}">here</a> to go back</p>
+{%endif%}
+{% endblock %}

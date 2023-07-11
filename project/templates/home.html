@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  {% if user.role == "admn"%}
+    <nav>
+      <ul>
+        <li>
+            <a href="{% url 'professors' %}">Professors</a>
+        </li>
+        <li>     
+            <a href="{% url 'subjects' %}">Subjects</a>
+        </li>
+        <li>     
+            <a href="{% url 'students' %}">Students</a>
+        </li>
+        <li>
+            <a href="{% url 'auth_logout' %}"> Logout</a>
+        </li>
+        </ul>
+    </nav>
+      Hi {{ user.username }}!
+  {%elif user.role == "prof"%}
+    <nav>
+      <ul>
+      <li>     
+          <a href="{% url 'listapredmeta' %}">Moji Predmeti</a>
+      </li>
+      <li>
+          <a href="{% url 'auth_logout' %}"> Logout</a>
+      </li>
+      </ul>
+    </nav>
+    Hi {{ user.username }}!
+    {%else %}
+      <nav>
+        <ul>
+          <li>     
+              <a href="{% url 'upisni_list' user.pk %}">Upisni List</a>
+          </li>
+          <li>
+              <a href="{% url 'auth_logout' %}"> Logout</a>
+          </li>
+          </ul>
+      </nav>
+      Hi {{ user.username }}!
+      {%endif%}
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
